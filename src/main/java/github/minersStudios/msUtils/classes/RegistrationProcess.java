@@ -26,29 +26,29 @@ public class RegistrationProcess {
         if(!playerInfo.hasPlayerDataFile()){
             playerInfo.createPlayerDataFile();
         }
-        ChatUtils.sendDialogueMessage(player, "оу...", 100L);
-        ChatUtils.sendDialogueMessage(player, "Крайне странное местечко", 150L);
+        ChatUtils.sendDialogueMessage(player, "Оу...", 100L);
+        ChatUtils.sendDialogueMessage(player, "Крайне странное местечко.", 150L);
         ChatUtils.sendDialogueMessage(player, "Ничего не напоминает?", 225L);
-        ChatUtils.sendDialogueMessage(player, "Ну ладно...", 300L);
-        ChatUtils.sendDialogueMessage(player, "Где-то я уже тебя видел", 350L);
-        ChatUtils.sendDialogueMessage(player, "Напомни ка своё имя", 400L);
-        ChatUtils.sendDialogueMessage(player, "Только говори честно, иначе буду тебя ошибочно называть до конца дней своих", 450L);
+        ChatUtils.sendDialogueMessage(player, "Ну ладно", 300L);
+        ChatUtils.sendDialogueMessage(player, "Где-то я уже тебя видел.", 350L);
+        ChatUtils.sendDialogueMessage(player, "Напомни-ка своё имя.", 400L);
+        ChatUtils.sendDialogueMessage(player, "Только говори честно, иначе буду тебя ошибочно називать до конца дней своих.", 450L);
         Bukkit.getScheduler().runTaskLater(Main.plugin, this::setFirstname, 550L);
     }
 
     private void setFirstname(){
-        SignMenu menu = new SignMenu(Arrays.asList("", "---===+===---", "Введите выше", "имя"))
+        SignMenu menu = new SignMenu(Arrays.asList("", "---===+===---", "Введите ваше", "имя."))
                 .reopenIfFail(true)
                 .response((player, strings) -> {
-                    if (strings[0].matches("[А-ЯЁ][-А-яЁё]+")) {
+                    if (strings[0].matches("[А-ЯҐІЁ][-А-яҐґІіЁё]+")) {
                         this.playerInfo.setFirstname(strings[0]);
-                        ChatUtils.sendDialogueMessage(this.player, "Интересно...", 25L);
-                        ChatUtils.sendDialogueMessage(this.player, "За свою жизнь, я многих повидал с таким именем", 100L);
-                        ChatUtils.sendDialogueMessage(this.player, "Но тебя вижу впервые", 225L);
+                        ChatUtils.sendDialogueMessage(this.player, "Интересно. . .", 25L);
+                        ChatUtils.sendDialogueMessage(this.player, "За свою жизнь я многих повидал с таким именем,", 100L);
+                        ChatUtils.sendDialogueMessage(this.player, "но тебя вижу впервые.", 225L);
                         ChatUtils.sendDialogueMessage(this.player, "Можешь, пожалуйста, уточнить свою фамилию и отчество?", 300L);
                         Bukkit.getScheduler().runTaskLater(Main.plugin, this::setLastname, 375L);
                     } else {
-                        this.player.sendMessage(ChatColor.GOLD + " Используйте только кириллицу");
+                        this.player.sendMessage(ChatColor.GOLD + " Используйте только кириллицу!");
                         return false;
                     }
                     return true;
@@ -57,14 +57,14 @@ public class RegistrationProcess {
     }
 
     private void setLastname(){
-        SignMenu menu = new SignMenu(Arrays.asList("", "---===+===---", "Введите выше", "фамилию"))
+        SignMenu menu = new SignMenu(Arrays.asList("", "---===+===---", "Введите вашу", "фамилию."))
                 .reopenIfFail(true)
                 .response((player, strings) -> {
-                    if (strings[0].matches("[А-ЯЁ][-А-яЁё]+")) {
+                    if (strings[0].matches("[А-ЯҐІЁ][-А-яҐґІіЁё]+")) {
                         this.playerInfo.setLastName(strings[0]);
                         this.setPatronymic();
                     } else {
-                        this.player.sendMessage(ChatColor.GOLD + " Используйте только кириллицу");
+                        this.player.sendMessage(ChatColor.GOLD + " Используйте только кириллицу!");
                         return false;
                     }
                     return true;
@@ -73,23 +73,23 @@ public class RegistrationProcess {
     }
 
     private void setPatronymic() {
-        SignMenu menu = new SignMenu(Arrays.asList("", "---===+===---", "Введите выше", "отчество"))
+        SignMenu menu = new SignMenu(Arrays.asList("", "---===+===---", "Введите ваше", "отчество."))
                 .reopenIfFail(true)
                 .response((player, strings) -> {
-                    if (strings[0].matches("[А-ЯЁ][-А-яЁё]+")) {
+                    if (strings[0].matches("[А-ЯҐІЁ][-А-яҐґІіЁё]+")) {
                         this.playerInfo.setPatronymic(strings[0]);
                         new PlayerID().addPlayer(this.player.getUniqueId());
                         ChatUtils.sendDialogueMessage(player,
-                                "Ну вот и отлично, "
+                                "Ну, вот и отлично, "
                                         + ChatColor.GRAY + "[" + this.playerInfo.getID() + "] "
                                         + ChatColor.WHITE + this.playerInfo.getFirstname() + " "
                                         + this.playerInfo.getLastname() + " "
                                         + this.playerInfo.getPatronymic(), 25L);
-                        ChatUtils.sendDialogueMessage(this.player, "Слушай...", 100L);
-                        ChatUtils.sendDialogueMessage(this.player, "А как мне к тебе обращаться?", 150L);
+                        ChatUtils.sendDialogueMessage(this.player, "Слушай,", 100L);
+                        ChatUtils.sendDialogueMessage(this.player, "а как мне к тебе обращаться?", 150L);
                         Bukkit.getScheduler().runTaskLater(Main.plugin, () -> this.player.openInventory(Pronouns.getInventory()), 225L);
                     } else {
-                        this.player.sendMessage(ChatColor.GOLD + " Используйте только кириллицу");
+                        this.player.sendMessage(ChatColor.GOLD + " Используйте только кириллицу!");
                         return false;
                     }
                     return true;
@@ -101,10 +101,10 @@ public class RegistrationProcess {
         this.playerInfo = playerInfo;
         this.player = playerInfo.getOnlinePlayer();
         if(playerInfo.getPronouns() == null) return;
-        ChatUtils.sendDialogueMessage(this.player, "Славно", 25L);
-        ChatUtils.sendDialogueMessage(this.player, "Ну что же...", 75L);
-        ChatUtils.sendDialogueMessage(this.player, "Мне уже пора", 125L);
-        ChatUtils.sendDialogueMessage(this.player, "Хорошей " + playerInfo.getPronouns().getPronouns() + " дороги, " + playerInfo.getPronouns().getTraveler(), 175L);
+        ChatUtils.sendDialogueMessage(this.player, "Славно.", 25L);
+        ChatUtils.sendDialogueMessage(this.player, "Ну что же,", 75L);
+        ChatUtils.sendDialogueMessage(this.player, "мне уже пора.", 125L);
+        ChatUtils.sendDialogueMessage(this.player, "Хорошей " + playerInfo.getPronouns().getPronouns() + " дороги, " + playerInfo.getPronouns().getTraveler() + ".", 175L);
         Bukkit.getScheduler().runTaskLater(Main.plugin, this::setOther, 225L);
     }
 
