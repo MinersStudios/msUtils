@@ -26,13 +26,13 @@ public class RegistrationProcess {
         if(!playerInfo.hasPlayerDataFile()){
             playerInfo.createPlayerDataFile();
         }
-        ChatUtils.sendDialogueMessage(player, "оу...", 100L);
-        ChatUtils.sendDialogueMessage(player, "Крайне странное местечко", 150L);
+        ChatUtils.sendDialogueMessage(player, "Оу...", 100L);
+        ChatUtils.sendDialogueMessage(player, "Крайне странное местечко.", 150L);
         ChatUtils.sendDialogueMessage(player, "Ничего не напоминает?", 225L);
         ChatUtils.sendDialogueMessage(player, "Ну ладно...", 300L);
-        ChatUtils.sendDialogueMessage(player, "Где-то я уже тебя видел", 350L);
-        ChatUtils.sendDialogueMessage(player, "Напомни ка своё имя", 400L);
-        ChatUtils.sendDialogueMessage(player, "Только говори честно, иначе буду тебя ошибочно называть до конца дней своих", 450L);
+        ChatUtils.sendDialogueMessage(player, "Где-то я уже тебя видел.", 350L);
+        ChatUtils.sendDialogueMessage(player, "Напомни-ка своё имя.", 400L);
+        ChatUtils.sendDialogueMessage(player, "Только говори честно, иначе буду тебя ошибочно називать до конца дней своих.", 450L);
         Bukkit.getScheduler().runTaskLater(Main.plugin, this::setFirstname, 550L);
     }
 
@@ -40,10 +40,10 @@ public class RegistrationProcess {
         SignMenu menu = new SignMenu(Arrays.asList("", "---===+===---", "Введите выше", "имя"))
                 .reopenIfFail(true)
                 .response((player, strings) -> {
-                    if (strings[0].matches("[А-ЯЁ][-А-яЁё]+")) {
+                    if (strings[0].matches("[А-ЯҐІЁ][-А-яҐґІіЁё]+")) {
                         this.playerInfo.setFirstname(strings[0]);
                         ChatUtils.sendDialogueMessage(this.player, "Интересно...", 25L);
-                        ChatUtils.sendDialogueMessage(this.player, "За свою жизнь, я многих повидал с таким именем", 100L);
+                        ChatUtils.sendDialogueMessage(this.player, "За свою жизнь я многих повидал с таким именем", 100L);
                         ChatUtils.sendDialogueMessage(this.player, "Но тебя вижу впервые", 225L);
                         ChatUtils.sendDialogueMessage(this.player, "Можешь, пожалуйста, уточнить свою фамилию и отчество?", 300L);
                         Bukkit.getScheduler().runTaskLater(Main.plugin, this::setLastname, 375L);
@@ -60,7 +60,7 @@ public class RegistrationProcess {
         SignMenu menu = new SignMenu(Arrays.asList("", "---===+===---", "Введите выше", "фамилию"))
                 .reopenIfFail(true)
                 .response((player, strings) -> {
-                    if (strings[0].matches("[А-ЯЁ][-А-яЁё]+")) {
+                    if (strings[0].matches("[А-ЯЁҐІ][-А-яҐґІіЁё]+")) {
                         this.playerInfo.setLastName(strings[0]);
                         this.setPatronymic();
                     } else {
@@ -76,7 +76,7 @@ public class RegistrationProcess {
         SignMenu menu = new SignMenu(Arrays.asList("", "---===+===---", "Введите выше", "отчество"))
                 .reopenIfFail(true)
                 .response((player, strings) -> {
-                    if (strings[0].matches("[А-ЯЁ][-А-яЁё]+")) {
+                    if (strings[0].matches("[А-ЯҐІЁ][-А-яҐґІіЁё]+")) {
                         this.playerInfo.setPatronymic(strings[0]);
                         new PlayerID().addPlayer(this.player.getUniqueId());
                         ChatUtils.sendDialogueMessage(player,
@@ -102,8 +102,8 @@ public class RegistrationProcess {
         this.player = playerInfo.getOnlinePlayer();
         if(playerInfo.getPronouns() == null) return;
         ChatUtils.sendDialogueMessage(this.player, "Славно", 25L);
-        ChatUtils.sendDialogueMessage(this.player, "Ну что же...", 75L);
-        ChatUtils.sendDialogueMessage(this.player, "Мне уже пора", 125L);
+        ChatUtils.sendDialogueMessage(this.player, "Ну что же,", 75L);
+        ChatUtils.sendDialogueMessage(this.player, "мне уже пора", 125L);
         ChatUtils.sendDialogueMessage(this.player, "Хорошей " + playerInfo.getPronouns().getPronouns() + " дороги, " + playerInfo.getPronouns().getTraveler(), 175L);
         Bukkit.getScheduler().runTaskLater(Main.plugin, this::setOther, 225L);
     }
