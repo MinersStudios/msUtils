@@ -60,7 +60,7 @@ public class RegistrationProcess {
         SignMenu menu = new SignMenu(Arrays.asList("", "---===+===---", "Введите выше", "фамилию"))
                 .reopenIfFail(true)
                 .response((player, strings) -> {
-                    if (strings[0].matches("[А-ЯЁҐІ][-А-яҐґІіЁё]+")) {
+                    if (strings[0].matches("[А-ЯҐІЁ][-А-яҐґІіЁё]+")) {
                         this.playerInfo.setLastName(strings[0]);
                         this.setPatronymic();
                     } else {
